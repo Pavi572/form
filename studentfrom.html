@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Student Form</title>
+    <style>
+        table, th, td{
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+        .cl{
+            background-color: aqua;
+            width :50px;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h2>STUDENT FORM</h2>
+ <table border="1">
+        <form id="studentForm">
+        <tr> <td></th><label for="name">Name:</label></td>
+            <td><input type="text" id="name" required></td><br><br></tr>
+        <tr>
+            <td><label for="age">Age:</label></td>
+       <td><input type="number" id="age" required><br><br></td></td>
+
+        <tr><td><label>Gender:</label></td>
+       <td><input type="radio" name="gender" value="Male" required> Male
+        <input type="radio" name="gender" value="Female" required> Female<br><br></td>
+
+        <tr> 
+            <td><label for="course">Course:</label></td>
+        <td><select id="course" required>
+            <option value="Python">Python</option>
+            <option value="JavaScript">JavaScript</option>
+        </select><br><br></td>
+
+<tr>
+
+<td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" required><br><br></td>
+    </form>
+  </table>
+  <button type="button" id="cl" onclick="saveData()">Save</button>
+
+ <h2>Student List</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Course</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        <tbody id="studentTable">
+            <!-- Entries will appear here -->
+        </tbody>
+    </table>
+
+    <script>
+        function saveData() {
+            var name = document.getElementById('name').value;
+            var age = document.getElementById('age').value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var course = document.getElementById('course').value;
+            var email = document.getElementById('email').value;
+
+            if (name && age && gender && course && email) {
+                var table = document.getElementById('studentTable');
+                var newRow = table.insertRow();
+
+                newRow.insertCell(0).innerHTML = name;
+                newRow.insertCell(1).innerHTML = age;
+                newRow.insertCell(2).innerHTML = course;
+                newRow.insertCell(3).innerHTML = gender;
+                newRow.insertCell(4).innerHTML = email;
+
+                var deleteCell = newRow.insertCell(5);
+                var deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-btn';
+                deleteButton.innerHTML = 'Delete';
+                deleteButton.onclick = function() {
+                    deleteRow(this);
+                };
+                deleteCell.appendChild(deleteButton);
+
+                document.getElementById('studentForm').reset();
+            } else {
+                alert("Please fill in all the fields.");
+            }
+        }
+
+        function deleteRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</center>
+</body>
+</html>
